@@ -1,3 +1,4 @@
+## Konsola (to co zwraca)
 Początkowy stan ocen:
 System ocen: Uczeń: Jan Kowalski, Oceny: 
 
