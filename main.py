@@ -1,46 +1,81 @@
-from student import Student
-from grades import Grades
-from caretaker import Caretaker
+class Car:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
 
-def main():
-    # Tworzymy ucznia
-    student = Student("Jan Kowalski")
-    grades_system = Grades(student)
+    def create_memento(self):
+        return CarBackup(self.brand, self.model, self.year)
 
-    # Tworzymy Caretaker, który będzie przechowywał mementa
+    def restore(self, memento):
+        self.brand = memento.brand
+        self.model = memento.model
+        self.year = memento.year
+
+    def __str__(self):
+        return f"Car(Brand: {self.brand}, Model: {self.model}, Year: {self.year})"
+
+
+class CarBackup:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+
+
+class Caretaker:
+    def __init__(self):
+        self.snapshots = []
+
+    def add_memento(self, memento):
+        self.snapshots.append(memento)
+
+    def get_memento(self, index):
+        if 0 <= index < len(self.snapshots):
+            return self.snapshots[index]
+        return None
+
+    def list_snapshots(self):
+        if not self.snapshots:
+            print("Brak zapisanych snapów.")
+            return
+        for i, snapshot in enumerate(self.snapshots):
+            print(f"Snap {i}: {snapshot}")
+
+
+# Przykład użycia
+if __name__ == "__main__":
+
+    car = Car("Toyota", "Corolla", 2020)
+    print(car)
+
     caretaker = Caretaker()
 
-    print("Początkowy stan ocen:")
-    print(grades_system)
+    caretaker.add_memento(car.create_memento())
 
-    # Zapisujemy początkowy stan ocen
-    caretaker.add_memento(grades_system.save_state_to_memento())
+    # Zmiana
+    car.brand = "Honda"
+    car.model = "Civic"
+    car.year = 2022
+    print(car)
 
-    # Dodajemy oceny
-    student.add_grade(5)
-    student.add_grade(4)
-    student.add_grade(3)
+    caretaker.add_memento(car.create_memento())
 
-    print("\nPo dodaniu ocen:")
-    print(grades_system)
+    # Zmiana
+    car.brand = "Ford"
+    car.model = "Focus"
+    car.year = 2021
+    print(car)
 
-    # Zapisujemy stan po dodaniu ocen
-    caretaker.add_memento(grades_system.save_state_to_memento())
+    caretaker.add_memento(car.create_memento())
 
-    # Usuwamy ocenę
-    student.remove_grade(3)
+    print("\nHistoria snapów:")
+    caretaker.list_snapshots()
 
-    print("\nPo usunięciu jednej oceny:")
-    print(grades_system)
+    print("\nPrzywracanie stanu do Snap 1:")
+    car.restore(caretaker.get_memento(0))
+    print(car)
 
-    # Zapisujemy stan po usunięciu oceny
-    caretaker.add_memento(grades_system.save_state_to_memento())
-
-    # Przywracamy stan ocen z pierwszego zapisu (początkowy stan)
-    grades_system.restore_state_from_memento(caretaker.get_memento(0))
-
-    print("\nPo przywróceniu początkowego stanu ocen:")
-    print(grades_system)
-
-if __name__ == "__main__":
-    main()
+    print("\nPrzywracanie stanu do Snap 2:")
+    car.restore(caretaker.get_memento(1))
+    print(car)
