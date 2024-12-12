@@ -1,12 +1,14 @@
-## Konsola (to co zwraca)
-Początkowy stan ocen:
-System ocen: Uczeń: Jan Kowalski, Oceny: 
+Car(Brand: Toyota, Model: Corolla, Year: 2020)
+Car(Brand: Honda, Model: Civic, Year: 2022)
+Car(Brand: Ford, Model: Focus, Year: 2021)
 
-Po dodaniu ocen:
-System ocen: Uczeń: Jan Kowalski, Oceny: 5, 4, 3
+Historia snapów:
+Snap 0: <__main__.CarBackup object at 0x0000021DA2C4D820>
+Snap 1: <__main__.CarBackup object at 0x0000021DA2C4D9A0>
+Snap 2: <__main__.CarBackup object at 0x0000021DA2C4D9D0>
 
-Po usunięciu jednej oceny:
-System ocen: Uczeń: Jan Kowalski, Oceny: 5, 4
+Przywracanie stanu do Snap 1:
+Car(Brand: Toyota, Model: Corolla, Year: 2020)
 
-Po przywróceniu początkowego stanu ocen:
-System ocen: Uczeń: Jan Kowalski, Oceny: 
+Przywracanie stanu do Snap 2:
+Car(Brand: Honda, Model: Civic, Year: 2022)
